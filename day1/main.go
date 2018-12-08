@@ -94,4 +94,3 @@ func main() {
 	freq = secondStar()
 	fmt.Printf("Second freq is %d\n", freq)
 }
-
