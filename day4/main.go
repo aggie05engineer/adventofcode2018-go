@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-const day = "day4"
+const day string = "day4"
 
 var timeRegex *regexp.Regexp = regexp.MustCompile(`^\[(.*?)\]`)
 var typeRegex *regexp.Regexp = regexp.MustCompile(`^\[.*] (\w+) `)
