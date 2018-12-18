@@ -9,32 +9,24 @@ import (
 const day string = "day5"
 
 func react(line string) string {
-	var leftIndex int = 0
-	for rightIndex := 1; rightIndex < len(line); {
-		leftRune := line[leftIndex]
-		rightRune := line[rightIndex]
-		fmt.Printf("[%s,%s]\n", string(leftRune), string(rightRune))
-		if strings.ToLower(string(leftRune)) == strings.ToLower(string(rightRune)) && leftRune != rightRune {
-			fmt.Printf("Stripping before %s\n", line)
-			line = line[0:leftIndex] + line[rightIndex+1:]
-			fmt.Printf("Stripping after  %s\n", line)
-			if leftIndex > 0 {
-				leftIndex--
-			} else {
-				leftIndex = 0
-			}
-			if rightIndex > 1 {
-				rightIndex--
-			} else {
-				rightIndex = 1
-			}
+	var stack []rune = make([]rune, 0)
+	stack = append(stack, rune(line[0]))
+	for i:= 1; i < len(line); i++ {
+		rightRune := rune(line[i])
+		if len(stack) == 0 {
+			stack = append(stack, rightRune)
 			continue
 		}
-		fmt.Printf("Moving right [%d,%d]\n", leftIndex, rightIndex)
-		leftIndex++
-		rightIndex++
+		leftRune := stack[len(stack) - 1]
+		if strings.ToLower(string(leftRune)) == strings.ToLower(string(rightRune)) && leftRune != rightRune {
+			//fmt.Printf("Stripping before %v\n", stack)
+			stack = stack[0: len(stack) - 1]
+			//fmt.Printf("Stripping after  %v\n", stack)
+			continue
+		}
+		stack = append(stack, rightRune)
 	}
-	return line
+	return string(stack)
 }
 
 func main() {
