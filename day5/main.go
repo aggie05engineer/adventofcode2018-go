@@ -27,6 +27,14 @@ func react(line string) string {
 	return string(stack)
 }
 
+func lowerAlpha() string {
+	characters := make([]byte, 26)
+	for i := range characters {
+		characters[i] = 'a' + byte(i)
+	}
+	return string(characters)
+}
+
 func main() {
 	lines := util.LoadInputFile(day)
 	if len(lines) > 1 {
@@ -36,5 +44,21 @@ func main() {
 	fmt.Printf("There are originally %d units\n", len(lines[0]))
 	line := lines[0]
 	reactedLine := react(line)
-	fmt.Printf("The remaining line has %d units", len(reactedLine))
+	fmt.Printf("The remaining line has %d units (first star)\n", len(reactedLine))
+
+	alphas := lowerAlpha()
+	mostReactedCharacter := string(alphas[0])
+	smallestResultingLineSize := len(line)
+	for _, character := range alphas {
+		s := string(character)
+		copiedLine := line
+		copiedLine = strings.Replace(copiedLine, s, "", -1)
+		copiedLine = strings.Replace(copiedLine, strings.ToUpper(s), "", -1)
+		length := len(react(copiedLine))
+		if length < smallestResultingLineSize {
+			smallestResultingLineSize = length
+			mostReactedCharacter = s
+		}
+	}
+	fmt.Printf("The most reacted character is %s with length %d\n", mostReactedCharacter, smallestResultingLineSize)
 }
