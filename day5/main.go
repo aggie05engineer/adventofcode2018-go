@@ -19,9 +19,7 @@ func react(line string) string {
 		}
 		leftRune := stack[len(stack) - 1]
 		if strings.ToLower(string(leftRune)) == strings.ToLower(string(rightRune)) && leftRune != rightRune {
-			//fmt.Printf("Stripping before %v\n", stack)
 			stack = stack[0: len(stack) - 1]
-			//fmt.Printf("Stripping after  %v\n", stack)
 			continue
 		}
 		stack = append(stack, rightRune)
